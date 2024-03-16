@@ -1,0 +1,67 @@
+<div class="container-fluid bg-white p-5">
+
+        <fieldset class="border rounded-3  p-4">
+            <legend  class="float-none w-auto px-3"  >
+                <mat-card style="background-color: #f1f1f1;font-family:  Segoe UI ;color: grey;" class="p-2" >
+                    Listes Des dépôts
+                </mat-card>
+                
+            </legend> 
+            <div class="row container-fluid">
+                <div class="col-9">
+                    <p style="color: grey;font-family:  Segoe UI Semibold; font-size: 16px;" class="">DIRPM : <span style="color: #198754;"><strong>{{nomProvince}}</strong></span></p>
+                    <p style="color: grey; font-family:  Segoe UI Semibold;font-size: 16px;">Agence : <span style="color: #0b132b;"><strong>{{currentZone?.nomZone}}</strong></span></p>
+                </div>
+                <div class="col-3">
+                    
+                        <form [formGroup]="Form">
+                            <div class="form-group  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 " matTooltip="Choisir une année pour voir les répartitions">
+                                <mat-form-field appearance="fill" class="col-12 ">
+                                    <mat-label>Année</mat-label>
+                                    <mat-select  formControlName="annee"     (selectionChange)="ChangeSelectYear($event)">
+                                        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option >
+                                    </mat-select>
+                                </mat-form-field>
+
+
+                            </div>
+                        </form>
+                    
+                </div>
+            </div>
+            
+        
+        
+        
+            <mat-card class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-hover shadow">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Depot Partenaire</th>
+                            <th scope="col">Date Depot</th>
+                            <th scope="col">Nb repart° agence</th>
+                            <th scope="col">Date repart° agence</th>
+                            <th scope="col">Partenaire</th>
+                            <!-- <th scope="col">Action</th> -->
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr *ngFor="let depot of depotByZone; let i = index">
+                            <td style="color: grey;">{{i+1}}</td>
+                            <td style="color: green; ">{{depot.nb_depotagence}}</td>
+                            <td>{{depot.date_depotagence | date}}</td>
+                            <td>{{depot.nb_depotzone}}</td>
+                            <td>{{depot.date_depotzone | date}}</td>
+                            <td>{{depot.nom_deposeur}}</td>
+                            
+                        </tr>
+                    </tbody>
+    
+                </table>
+            </mat-card>
+            
+        </fieldset>
+
+</div>

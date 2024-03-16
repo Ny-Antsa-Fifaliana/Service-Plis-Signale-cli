@@ -1,0 +1,159 @@
+
+
+<div class="container-fluid bg-white">
+    
+                <div class="container-fluid p-5">
+    
+                    <div class="p-3 mb-3" style="background-color: #f7f7f7;">
+                        <div>
+                            <span style="color: grey;"> 
+                                <a routerLink="/sps/depotagence" style="text-decoration: none; color: grey;"> DÉPÔT PARTENAIRE ( {{nbDepotagence}} )</a>
+                                <span style="margin-left: 20px;margin-right: 20px;">></span>
+                                <a routerLink={{lienDepotprovince}} style="text-decoration: none; color: grey;">RÉPARTITION DIRPM ( {{currentDepotProvince.nbDepotProvince}} )</a>
+                                <span style="margin-left: 20px;margin-right: 20px;">></span>
+                                RÉPARTITION AGENCE</span>
+                        </div> 
+                    </div>
+    
+                    <div>
+                        <fieldset class="border rounded-3 p-3 row">
+                            <legend  class="float-none w-auto px-3" style="font-size: large;color: grey;font-family: Segoe UI ;"  >                                
+                                    <span style="font-size: medium;">Liste des répartition à {{nomProvinceActuel}}</span>
+                            </legend>
+                            <fieldset class="border rounded-3 ml-3 row col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 " style="background-color: #f0f0f0;font-family: Segoe UI ; font-size: medium;">
+                                <legend  class="float-none w-auto px-3"  >
+                                    <mat-card style="background-color: orange;color: white;font-size: medium;" class="w3-animate-right p-2" >
+                                        Instances 
+                                    </mat-card>
+                                    
+                                </legend>
+                                <div class="container-fluid w3-animate-bottom " >
+                                    <div class="mt-3  card row mat-elevation-z8 p-2 " *ngFor="let etat of depotzones_and_instances; let i=index;" style="background-color: #14517c;">
+                                        <div class="row">
+                                            <div class="row col">
+                                                <p class="col w3-animate-left" style="color: white; ">{{etat.nom_zone}}</p>
+                                            
+                                        
+                                           
+                                            
+                                                <div  class="w3-animate-right mb-2 progress instanceProgressBar col-11 mat-elevation-z8"  [ngStyle]="((etat.nb_instance*100)/etat.nb_depot)==0 && etat.id_depot_etat!=0 ? {color:'white', backgroundColor:'#45ec74'}: {color:'black', backgroundColor:'#e9ecef'} ">
+        
+                                                    <div>{{((etat.nb_instance*100)/etat.nb_depot)| number: '1.0-1'}}%</div>
+                                                    
+                                                    <div *ngIf="((etat.nb_instance*100)/etat.nb_depot)>50 " class="progress-value ml-3" style=" --width:{{(etat.nb_instance*100)/etat.nb_depot}}%; background-color:red;"></div>
+                                                    <div  *ngIf="((etat.nb_instance*100)/etat.nb_depot) <= 50 "class="progress-value ml-3" style=" --width:{{(etat.nb_instance*100)/etat.nb_depot}}%; background-color: orange"></div>
+                                                    
+                                                </div> 
+                                            </div>
+                                            <div class=" d-xl-block col-xxl-3 col-xl-3 d-lg-none d-md-none col-sm-3 pt-1 mt-4" *ngIf="etat.id_depot_etat!=0 && (etat.nb_instance*100)/etat.nb_depot==0" style="color: #45ec74; font-size: small;font-family: Segoe UI" matTooltip="Mouvement terminer">TERMINER</div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-1 col-sm-1 mt-3" *ngIf="etat.id_depot_etat!=0 && (etat.nb_instance*100)/etat.nb_depot==0" style="color: #45ec74; font-size: medium;"><i class="bi bi-check-all" style="color: #45ec74; font-size: 30px;" ></i></div>
+                                            <button class="mt-2"  mat-mini-fab color="warn" (click)="viewEtatOfDepot(etat.id_depot)"     *ngIf="(etat.nb_instance*100)/(etat.nb_depot)!=0"    matTooltip="instance" >{{etat.nb_instance}}</button>  
+                                        </div>  
+                                           
+                                    </div>
+                                    <p class="mt-3 col-6 " style="color: #14517c;">Total répartition: {{currentDepotProvince.nbDepotProvince}}</p>
+                                </div>
+                            </fieldset>
+
+                            
+                            
+                                
+                            
+                            
+                            
+                            <div class="container col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                                    <div class="col">
+                                        <form [formGroup]="FormDepot_add" (ngSubmit)="onAddDepot()">
+                                            <div class="form-group" >
+                                                <fieldset class="border rounded-3 ml-3 p-3 row" style="background-color: #f0f0f0;">
+                                                    <legend  class="float-none w-auto px-3"  >
+                                                        <mat-card class="p-2" style="background-color: #198754; color: white;font-size: medium;font-family: Segoe UI;" >
+                                                            Ajouter dans Agences
+                                                        </mat-card>
+                                                        
+                                                    </legend>
+                                                    <input min="1" type="number" class="form-control mb-2" id="nbDepot" formControlName="nbDepot" placeholder="Entrer un nombre" style="font-family: Segoe UI;">
+                
+                                                    <!-- <select class="form-select" aria-label="zone" (change)="ChangeSelectZone($event)" formControlName="zone">
+                                                        <option selected disabled value="">Sélectionner une zone</option>
+                                                        <option *ngFor="let zone of zones" [value]="zone.idZone">{{zone.nomZone}}</option>
+                                                    </select> -->
+
+
+                                                    <mat-form-field appearance="fill" class="col-12 p-0">
+                                                        <mat-label>Zone</mat-label>
+                                                        <mat-select (selectionChange)="ChangeSelectZone($event)" formControlName="zone" style="font-family: Segoe UI;">
+                                                            <mat-option *ngFor="let zone of zones" [value]="zone.idZone">{{zone.nomZone}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+
+                                                <button mat-raised-button type="submit" [disabled]="FormDepot_add.invalid" class="btn my-1 mb-4" style="width: 100%; color: white;background-color: #198754">AJOUTER</button> 
+                                                </fieldset>    
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                        </fieldset> 
+                    </div>
+                </div>
+
+
+
+        
+    
+        
+
+
+
+        
+
+
+
+
+        <div class="p-4">
+            <mat-card class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table table-hover shadow ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Nb repartition</th>
+                            <th scope="col">Agence</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+        
+                    <tbody>
+                        <tr *ngFor="let depot of depotzones_and_instances; let i = index" style="font-family: Segoe UI; font-size: 14px;">
+                            <td style="color: grey;">{{i+1}}</td>
+                            <td style="color: green; ">{{depot.nb_depot}}</td>
+                            <td>{{depot.nom_zone}}</td>
+                            <td>{{depot.date_depot | date}}</td>
+                        
+                            <td>    
+                                <div class="d-flex flex-row ">
+                                    <!-- <div><button type="button" class="btn" (click)="viewUpdateDepot(depot.nbDepot, depot.idDepot)"><i class="bi bi-pencil-square" style="color: #3f48cc;"></i> </button></div> -->
+                                    <div class="mr-5"><button matTooltip="Supprimer" type="button" class="btn" (click)="deleteWarning(depot.id_depot,depot.nb_depot)"><i class="bi bi-x-circle-fill" style="color: #f57c7c;"></i></button></div>
+                                    <div> <button mat-raised-button class="btn" style="background-color: #14517c; color: white;" (click)="viewEtatOfDepot(depot.id_depot)"  matBadge="{{depot.nb_instance}}" matBadgeColor="warn" [matBadgeHidden]="depot.nb_instance==0" matTooltip="Instance : {{depot.nb_instance}}">Etat</button> </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+
+                        <tr style="background-color: #dcdcdc;">
+                            <th>Total :</th>
+                            <td>{{totalDepotzone}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+        
+                </table>
+            </mat-card>
+            
+        </div>
+        
+   
+
+</div>

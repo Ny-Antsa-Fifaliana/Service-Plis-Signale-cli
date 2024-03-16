@@ -1,0 +1,63 @@
+
+<div class="container-fluid bg-white">
+       
+        <div class="p-4">
+            <div class="row mb-3 mt-5" style="margin-right: -0.5%;" *ngIf="authService.hasRole('ADMIN')" >
+                <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9"></div>
+                <button style="font-family:  Segoe UI;background-color: #00e396; color: white;" class="btn col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 btn-success" mat-raised-button (click)="viewAddProvinceForm()"><i class="bi bi-plus-circle-fill mr-3"></i> Ajouter DIRPM </button>
+            </div>
+             
+            <mat-card class="p-3">
+                <fieldset class="border rounded-3 p-3">
+                    <legend  class="float-none w-auto px-3"  >
+                        <mat-card style="background-color: #f1f1f1;font-family:  Segoe UI ;color: grey;" class="p-2">
+                            <span style="font-size: medium;">Liste des DIRPM</span>
+                        </mat-card>
+                        
+                    </legend> 
+                    
+                    <div class="p-3 table-responsive row">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table table-hover shadow">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th  scope="col">No.</th>
+                                    <th  scope="col">Nom</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let province of  provinces; let i=index ;" >
+                                    <td style="color: grey;">{{i+1}}</td>
+                                    <td style="font-size: 14px; font-family:  Segoe UI;">{{ province.nomProvince }}</td>
+                                    
+                                    <td>    
+                                        <div class="d-flex flex-row ">
+                                            <button title="Modifier" type="button" class="btn" style="color: #3f4b63; "  (click)="viewUpdateProvince(province.nomProvince, province.codeProvince)" *ngIf="authService.hasRole('ADMIN')"><i class="bi bi-pencil-square"></i></button>
+                                            <button title="Supprimer" type="button" class="btn" (click)="deleteWarning(province)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"  *ngIf="authService.hasRole('ADMIN')"></i></button>
+                                            <button title="Voir la liste des agences" class="ml-5" mat-raised-button style="background-color: #14517c; color: aliceblue;font-family:  Segoe UI ;font-size: 14px; width: 24%;" (click)="viewZoneOfProvince(province.codeProvince)"> Agence</button>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                
+                            </tbody>
+
+                        </table>
+                    </div>
+                            
+
+                </fieldset>
+            </mat-card>
+                
+            
+     
+        </div>
+
+
+</div>
+
+
+
+
+

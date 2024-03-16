@@ -1,0 +1,64 @@
+
+<div class="d-flex bg-light" id="wrapper">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper"  [ngClass]="status ? 'hide' : 'show'">
+    <div class="sidebar-heading"><span class="bg-dark text-white rounded shadow px-2 m-2">SPS</span> <span>PAOSITRA</span> </div>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action bg-light">TABLEAU DE BORD</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">AGENCES</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">RAPPORT</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">COMPTE</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">DECONNEXION</a>
+     
+    </div>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-body rounded">
+     
+      <div class="container-fluid " >
+        <button class="btn btn-primary" (click)="clickEvent()">-</button>
+       
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> -->
+          <!-- <span class="navbar-toggler-icon"></span> -->
+        <!-- </button> -->
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+              <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+              </li>
+
+
+      
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+<!-- 
+     <div class="container-fluid">
+      <h1 class="mt-4">titre </h1>
+      <p>content</p>
+    </div>
+  -->
+  <router-outlet></router-outlet>
+
+  </div>
+    
+ 
+    
+
+</div>

@@ -1,0 +1,12 @@
+<div class="card my-5">
+    <div class="card-body">
+        <form [formGroup]="FormDepot_update" (ngSubmit)="onUpdateDepot()">
+            <div class="form-group">
+                <input type="text" class="form-control" id="nbDepot" formControlName="nbDepot" placeholder="{{ancienNbDepot}}">
+            </div>
+            
+            <button type="submit" [disabled]="FormDepot_update.invalid" class="btn btn-success card my-1">Modifier</button>
+        </form>
+    </div>
+
+</div>

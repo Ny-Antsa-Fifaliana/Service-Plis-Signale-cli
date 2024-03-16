@@ -1,0 +1,10 @@
+<div id="chart">
+    <apx-chart *ngIf="bool && (percent|number)"
+      [series]="[percent]"
+      [chart]="chartOptions.chart"
+      [plotOptions]="chartOptions.plotOptions"
+      [labels]="chartOptions.labels"
+      [fill]="chartOptions.fill"
+    ></apx-chart>
+  </div>
+  

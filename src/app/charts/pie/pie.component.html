@@ -1,0 +1,126 @@
+<div class="container-fluid " style="margin-top: 3%;"> 
+    <!-- mr-3  -->
+    <div class="row" >
+        <div class="col-xl-3 col-lg-3  col-md-3  col-sm-3 ">
+            <div class="card text-center shadow">
+                <div class="row">
+                    <div class="col-12 p-3">
+                        <p style="color: grey;"> Total Dépots Actuel </p>
+                        <p style="font-size: 30px; color: grey;" class="m-3 w3-animate-right"><i class="bi bi-stack"></i> {{depot}}</p>
+                        <mat-divider></mat-divider>
+                        <p style="color: grey;" class="w3-animate-bottom mt-2"> (Janvier - Décembre)</p>
+                    </div>                        
+                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-xl-3 col-lg-3  col-md-3  col-sm-3  ">
+            <div class="shadow card p-2">
+                <div class="row">   
+                    <div class="col-6">
+                        <p style="color: grey;"> Livrées  </p>
+                        <h1 class="w3-animate-right"><i class="bi bi-send-check-fill" style="color: #00e396"></i> <strong style="color: #0b132b"> {{livrees}}</strong></h1>
+                    </div>
+                        <app-strocked   [percent]="(100*livrees)/depot | number: '1.0-0'"   class="col-xl-6 col-lg-6 col-md-6 d-none d-sm-none d-md-block" style="height: 100px;"></app-strocked>
+                </div>
+                <div class="row p-1 mt-2 w3-animate-left " style="background-color: #00e396;color: white;">
+                    <p>Livrée / dépôt total </p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-xl-3 col-lg-3  col-md-3  col-sm-3 ">
+            <div class="shadow card p-2">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: grey;"> Retours </p>
+                        <h1 class="w3-animate-right"><i class="bi bi-envelope-exclamation" style="color: orange"></i> <strong style="color: #0b132b"> {{retours}}</strong></h1>
+                    </div>
+                    <app-strocked-retour [percentRetour]="(100*retours)/depot | number: '1.0-0'"  class="col-xl-6 col-lg-6 col-md-6 d-none d-sm-none d-md-block" style="height: 100px;"></app-strocked-retour>
+                </div>
+                <div class="row p-1 mt-2 w3-animate-bottom" style="background-color: orange;color: white;">
+                    <p>Retour / dépôt total</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-xl-3 col-lg-3  col-md-3  col-sm-3">
+            <div class="shadow card p-2 ">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: grey;"> Instances </p>
+                        <h1 class="w3-animate-right"> <i class="bi bi-hourglass-top" style="color: red"></i> <strong style="color: #0b132b"> {{instances}}</strong></h1>
+                    </div>
+                    <app-strocked-instance  [percentInstance]="(100*instances)/depot | number: '1.0-0'"   class="col-xl-6 col-lg-6 col-md-6 d-none d-sm-none d-md-block" style="height: 100px;"></app-strocked-instance>
+                </div>
+                <div class="row p-1 mt-2 w3-animate-right" style="background-color: red;color: white;">
+                    <p>Instance / dépôt total</p>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</div>
+<mat-divider class="m-4"></mat-divider>
+<div class="container-fluid" style="margin-left: 0%;">
+    <div class="row">
+        <div class="col-xxxl-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+            <div style="position: relative; top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                <app-combo-pie (livrees_emit)="totalLivree($event)" (retours_emit)="totalRetour($event)" (instances_emit)="totalInstance($event)" (depot_emit)="totalDepot($event)" (ObjectMonthLR_emit)="objectLRFunction($event)" (instances_emit)="instance_listFunction($event)"></app-combo-pie>
+            </div>
+            
+        </div>
+        <div class="col-xxxl-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6" >
+            <div style="position: relative; top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                <app-donut-pie></app-donut-pie>  
+            </div>
+            
+        </div>
+        
+    </div>
+    <mat-divider class="m-4"></mat-divider>
+    <div class=" row">
+        <!-- {{objectLR[0].mois}} -->
+        <div class="col-12">
+            <table class="table shadow bg-white">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Mois</th>
+                        <th scope="col" >Livree</th>
+                        <th scope="col" >Retour</th>
+                        <th scope="col" >Instance</th>
+                        <th scope="col" style=" background-color:#00E396" class="text-center">Livree</th>
+                        <th scope="col" style="background-color:#FEB019" class="text-center">Retour</th>
+                        <th scope="col" style="background-color:red; color: white;" class="text-center">Instance</th>
+                        
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr *ngFor="let object of  objectLR; let i=index ; " >
+                        <td style="color: grey;">{{i+1}}</td>
+                        <td style="font-family: Segoe UI Semibold;">{{ object.mois }}</td>
+                        <td style="font-family: Segoe UI Semibold;">{{ object.total_livree }}</td>
+                        <td style="font-family: Segoe UI Semibold;">{{ object.total_retour }}</td>
+                        <td style="font-family: Segoe UI Semibold;">{{ instance_list[i] }}</td>
+                        <td style="font-family: Segoe UI Semibold;" class="text-center">{{ (object.total_livree*100)/depot | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                        <td style="font-family: Segoe UI Semibold;" class="text-center">{{ (object.total_retour*100)/depot | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                        <td style="font-family: Segoe UI Semibold;" class="text-center">{{ (instance_list[i]*100)/depot | number: '1.0-2'}}<span style="color: grey;"> %</span></td>
+                        
+    
+                    </tr>
+                </tbody>
+    
+            </table>
+        </div>
+ 
+    </div>
+    
+    
+</div>
+
+

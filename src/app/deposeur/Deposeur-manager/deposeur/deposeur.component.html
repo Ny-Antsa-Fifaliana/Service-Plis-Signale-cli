@@ -1,0 +1,52 @@
+<div class="container-fluid bg-white mt-3">
+    <!-- <div class="card row " style="width: 27.5%; margin-left: 1%;"><h1 class="mt-4 pb-3" style="color: #ffd600;"><i class="bi bi-bank2 mr-3 ml-3" style="color: #0b132b;"></i>AGENCES</h1></div> -->
+       
+     
+            <div class="row mb-3 mt-5" style="margin-right: -0.5%;" *ngIf="authService.hasRole('ADMIN')">
+                <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9"></div>
+                <button mat-raised-button style="background-color: #00e396; color: white; " class=" col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 responsive" (click)="viewAddDeposeurForm()"><i class="bi bi-plus-circle-fill mr-3"></i> Nouvelle Partenaire </button>
+            </div>
+            <mat-card class="p-3"> 
+                <fieldset class="border rounded-3 p-3">
+                    <legend  class="float-none w-auto px-3"  >
+                        <mat-card style="background-color: #f1f1f1;color: grey;font-family: Segoe UI;" class="p-2" >
+                            
+                            <span style="font-size: medium;">Liste des Partenaires</span>
+                        </mat-card>
+                        
+                    </legend> 
+
+                    <div class="p-3 table-responsive row">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table table-hover shadow ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col" *ngIf="authService.hasRole('ADMIN')">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let deposeur of  deposeurs; let i=index ; " >
+                                    <td style="color: grey;">{{i+1}}</td>
+                                    <td style="font-family: Segoe UI Semibold;">{{ deposeur.nomDeposeur }}</td>
+                                    <td     *ngIf="authService.hasRole('ADMIN')">    
+                                        <div class="d-flex flex-row ">
+                                            <div><button type="button" class="btn" (click)="viewUpdateDeposeur(deposeur.nomDeposeur, deposeur.idDeposeur)" matTooltip="modifier"><i class="bi bi-pencil-square"></i></button></div>
+                                            <div class="ml-3"><button type="button" class="btn" (click)="deleteWarning(deposeur)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;" matTooltip="supprimer"></i></button></div>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                        
+                </fieldset>
+            </mat-card>
+        
+
+
+</div>

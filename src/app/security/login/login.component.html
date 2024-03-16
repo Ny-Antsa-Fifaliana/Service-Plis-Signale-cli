@@ -1,0 +1,55 @@
+  
+                      
+                        
+                        <div class="col-8 row shadow" style="background-color: #111a3c;position: relative; top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 d-lg-block d-sm-none d-none">
+                                <img src="../assets/img/paositra.png" style="position: absolute; width: 50%;opacity: 5%;top: 50%;left: 50%;transform: translate(-50%,-50%);z-index: 1;">
+                                <h1 style="width: 60%; background-color: #111a3c;position: relative; top: 45%;left: 58%;transform: translate(-50%,-50%);" >
+                                    <a class="logo" style="text-decoration: none;">
+                                        <img class="logo w3-animate-left row"  style="max-width:50%; margin-left: 15%;" src="../assets/img/logo.png"/>
+                                        <span class="ml-4 mt-0 w3-animate-right row card" style="background-color: #ffd600;width: 20%;"></span> 
+                                        <span style=" font-family: sans-serif; font-size: 50%;color: white;" class="w3-animate-left row ml-5">𝘚𝘌𝘙𝘝𝘐𝘊𝘌 𝘗𝘓𝘐𝘚 𝘚𝘐𝘎𝘕𝘈𝘓𝘌𝘚</span>
+                                    </a>
+                                </h1>
+                                
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 p-5" style="background-color: white;z-index: 2;" >
+                                <fieldset class="mt-5 w3-animate-top">
+                                    <legend  class="rounded-4 float-none w-auto " style="left: 50%;position: relative;transform: translate(-50%)">
+                                        <i class="bi bi-person-circle" style="font-size: 80px;color: #111a3c;" ></i>
+                                    </legend>
+                                    <div>
+                                        <h1 class="text-center" style="color: #111a3c;">Connexion</h1>
+                                        <p style="color: grey; margin-top: -5%; font-size: small" class="text-center d-xxl-none">Paositra Malagasy</p>
+                                    </div>
+                                    
+                                    <div class="p-xl-5 p-lg-3 p-md-0">
+                                        <form [formGroup]="userFormGroup" (ngSubmit)="handleLogin()">
+                                            <div class="mb-4 input-group">
+                                                <span class="input-group-text"><i class="bi bi-person-fill" aria-hidden="true"></i></span>
+                                                <input style="font-size: small;" type="text" formControlName="username" class="form-control" placeholder=" Nom d'utilisateur ...">
+                                            </div>
+                                            <div class="mb-3 input-group">
+                                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                                <input style="font-size: small;" type="password" formControlName="password" class="form-control" placeholder="Mot de passe ..." >
+                                            </div>
+                                            <div class="row m-0">
+                                                <div class="text-danger p-0" *ngIf="errorMessage">{{errorMessage}}</div>
+                                                <button type="submit" [disabled]="userFormGroup.invalid" class="rounded-4 btn btn-primary mat-elevation-z8 mt-3 p-1" style="font-size: large;">
+                                                    <span class="spinner-grow spinner-grow-sm mr-3" role="status" aria-hidden="true" *ngIf="loading"></span>
+                                                    Se connecter...
+                                                </button>
+                                                
+                                            </div>    
+                                            
+                                        </form>
+                                    </div>
+                                </fieldset>
+
+                                
+                            </div>
+                        </div>
+                    
+  
+
+

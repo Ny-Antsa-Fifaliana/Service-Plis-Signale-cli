@@ -1,0 +1,77 @@
+<div class="container-fluid bg-white">
+    <div class="p-5">
+
+        <div class="p-3 mb-5" style="background-color: #f7f7f7;">
+            <div>
+                <span style="color: grey;"> 
+                    DÉPÔT PARTENAIRE ( {{nbDepotagence}} )
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    RÉPARTITION DIRPM ( {{currentDepotprovince.nbDepotProvince}} )
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    RAPPORT ANNUEL
+                </span>
+            </div> 
+        </div>
+
+        <fieldset class="border rounded-3 p-5 ">
+            <legend  class="float-none w-auto px-3" style="color: grey;">Rapport Par Agence Annuel</legend>
+            <div class="row">
+                <p style="font-size: 16px;margin-left: 14px;"><span style="color: grey;">Répartition à {{currentNomProvince}} : </span> <strong>{{currentDepotprovince.nbDepotProvince}}</strong></p>
+            </div>
+            
+           
+            <div class="p-3 table-responsive row">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-hover shadow">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Agence</th>
+                            <th scope="col">Répartition</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total Livree</th>
+                            <th scope="col">Total Retour</th>
+                            <th scope="col">Total Instance</th>
+                            <th scope="col" style=" background-color:#00E396" class="text-center">Livree</th>
+                            <th scope="col" style="background-color:#FEB019" class="text-center">Retour</th>
+                            <th scope="col" style="background-color:red; color: white;" class="text-center">Instance</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let rapport  of rapportDepotZones; let i = index">
+                            <td style="color: grey;">{{i+1}}</td>
+                            <td style="color: green; ">{{rapport.nom_zone}}</td>
+                            <td>{{rapport.nb_depot}}</td>
+                            <td>{{rapport.date_depot | date}}</td>
+                            <td>{{rapport.total_livree}}</td>
+                            <td>{{rapport.total_retour}}</td>
+                            <td>{{rapport.total_instance}}</td>
+                            <td>{{(rapport.total_livree*100)/rapport.nb_depot | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                            <td>{{(rapport.total_retour*100)/rapport.nb_depot | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                            <td>{{(rapport.total_instance*100)/rapport.nb_depot | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                        
+                            <td> 
+                                <div class="d-flex flex-row ">
+
+                                    <button matTooltip="Détails" mat-button [matMenuTriggerFor]="menu"><i class="bi bi-three-dots-vertical"></i></button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="viewRapportZoneSemaine(rapport.id_depotzone)">Semaine</button>
+                                        <button mat-menu-item (click)="viewRapportZoneQuinzieme(rapport.id_depotzone)">15 em du mois</button>
+                                        <button mat-menu-item (click)="viewRapportZoneMois(rapport.id_depotzone)">Mois</button>
+                                    </mat-menu>
+
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+                
+
+    </fieldset>
+
+    </div>
+</div>

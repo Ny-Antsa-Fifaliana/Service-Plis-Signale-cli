@@ -1,0 +1,230 @@
+
+<div class="d-flex"  id="wrapper">
+    <nav id="sidebar"  [ngClass]="status ? 'active' : 'hide'" style="background-image: url(../assets/img/paositraopacity.png);background-repeat: no-repeat;background-size: 290%;">
+        <div class="custom-menu mt-4" style="z-index: 1;">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary"  (click)="clickEvent()">
+              <i [ngClass]="status ? 'bi bi-list-ul' : 'bi bi-caret-left-fill'"></i>
+            <span class="sr-only" style="background-color: #fff;">Toggle Menu</span>
+            </button>
+        </div>
+        <div class="p-4">
+          <h1 class="mt-4">
+            <a class="logo " style="text-decoration: none;">
+              <img class="logo w3-animate-left"  style="max-width:50%;position: relative;left: 50%;transform: translate(-50%); " src="../assets/img/logo.png"/>
+              <span class="mb-2 ml-4 w3-animate-right" style="color: #ffd600;position: relative; top: 50%;left: 50%;transform: translate(-50%,-50%);">_________________</span> 
+              <span style=" font-family:  Segoe UI; font-size: 10px; text-align: center;margin-top: -14%;" class="w3-animate-left"><I>SERVICE PLIS SIGNALES</I></span>
+            </a>
+          </h1>
+          
+          <ul class="list-unstyled components mb-5 navbar-nav w3-animate-bottom" style="margin-top: 30%;font-family:  Segoe UI ; z-index: 1;">
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                    <a routerLink="/sps/dashboard"  style="text-decoration: none; font-size: small;"><i class="bi bi-speedometer2 mr-3 ml-3" style="color: white;"></i>  TABLEAU DE BORD</a>
+                </li>
+
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                  <a routerLink="/sps/deposeur" style="text-decoration: none; font-size:small;"><i class="bi bi-bank  mr-3 ml-3" style="color: white;"></i>PARTENAIRE</a>
+                </li>
+                <!-- #44bef1 -->
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                  <a routerLink="/sps/agences/province" style="text-decoration: none; font-size:small;" ><i class="bi bi-cloud-sun mr-3 ml-3" style="color: white;"></i> DIRPM</a>
+                </li>
+
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                  <a routerLink="/sps/motif" style="text-decoration: none; font-size:small;"><i class="bi bi-send-exclamation  mr-3 ml-3" style="color: white;"></i>MOTIF</a>
+                </li>
+  
+                <li routerLinkActive="active" matBadge="{{instancesTotals}}"  matBadgeColor="warn" [matBadgeHidden]="instancesTotals==0 || matBadge || matBadgeByDepotAgenceAnnee" (click)="matBadgeHidden()"  matTooltip="Dépot avec le nombre d'instance en cours de livraison">
+                  <a routerLink="/sps/depotagence" style="text-decoration: none; font-size:small;"><i class="bi bi-database mr-3 ml-3" style="color: white;" ></i>DEPOTS</a>
+                </li>
+    
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                  <a routerLink="/sps/rapport/annuel" style="text-decoration: none; font-size:small;"><i class="bi bi-bar-chart mr-3 ml-3" style="color: white;"></i> RAPPORT</a>
+                </li>
+                <li routerLinkActive="active"   *ngIf="authService.hasRole('ADMIN')" (click)="matBadgeShow()">
+                  <a routerLink="/sps/account" style="text-decoration: none; font-size:small;"><i class="bi bi-gear mr-3 ml-3" style="color: white;"></i> COMPTE</a>
+                </li>
+                <li routerLinkActive="active" (click)="matBadgeShow()">
+                  <a style="text-decoration: none; font-size:small;" (click)="logoutWarning()"><i class="bi bi-box-arrow-right mr-3 ml-3" style="color: white;"></i> DECONNEXION</a>
+                </li>
+            
+          </ul>
+
+          
+          
+        </div>
+    </nav>
+
+
+
+
+
+    <!-- #eaeef2 -->
+    <div id="content" class="ml-6 " style="background-color: white;" > 
+  <!--  for navbar in top  -->
+  <!-- navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-body -->
+          <nav id="inTop" class="navbar navbar-expand-sm d-sm-none d-none d-md-block navbar-light p-3 mb-0 shadow" [ngStyle]="{'background-color': status== true? '#ffd600':'white'}"  >
+            <div class="container-fluid ">
+              <!-- <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button> -->
+
+              <div class=" navbar-collapse" id="navbarSupportedContent" >
+                   
+                    <ul class=" navbar-nav me-auto nav-hover  d-md-none d-none d-lg-block" *ngIf="status" style="transition: 1s;cursor: pointer; " (click)="clickEvent()" >
+                        <li class="nav-item mr-5 nav-brand"  class="w3-container" >
+                         <span  class="w3-center w3-animate-top bg-white rounded shadow ml-5 px-2 py-1 m-2 " style="color: #0b132b; text-shadow: 1px 5px 5px grey;" >𝙎𝙋𝙎</span>
+                         <span  style="color: #fff; text-decoration: overline;text-shadow: 1px 1px 5px grey; font-family:  Segoe UI Semibold;" class="w3-center w3-animate-left" >SERVICE PLIS SIGNALES</span>
+                        </li>
+                    </ul>
+                    
+                    
+                    <ul class="nav navbar-nav me-auto navbar-right d-md-none d-none d-lg-block"*ngIf="!status" style="transition: 1s;cursor: pointer;font-family:  Segoe UI Semibold; " (click)="clickEvent()">
+                      <li class="nav-item mr-5"  class="w3-container" >
+                        <img class="logo p-0 ml-4 w3-animate-top"   style="max-width:5%; margin-left: 15%;font-family:  Segoe UI" src="../assets/img/paositra.png"/><span style="color: grey; margin-left: 10px;"> <strong>PAOSITRA MALAGASY</strong></span>
+                       <!-- <span class="w3-center w3-animate-top bg-white rounded shadow ml-5 px-2 py-1 m-2 " style="color: #0b132b; text-shadow: 1px 5px 5px grey;" >𝙎𝙋𝙎</span> -->
+                       <!-- <span class="w3-center w3-animate-right ml-3" style="color: grey;">PAOSITRA MALAGASY</span> -->
+                      </li>
+                    </ul>
+                   
+                    <ul class="nav navbar-nav w3-animate-right" *ngIf="!status" style="font-family:  Segoe UI Semibold;" >
+                      
+                      <mat-divider [vertical]="true"></mat-divider>
+                      <li class="nav-item ml-3">
+                        <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-link" matTooltip="Profile" (click)="reloadPrincipale()">
+                          <i class="bi bi-person-circle mr-2" style="font-size: large;"></i>
+                        </button>
+                      </li>
+                      
+                    </ul>
+
+
+
+                    <ul class="nav navbar-nav w3-animate-left" *ngIf="status" style="font-family:  Segoe UI Semibold;">
+                      <li class="nav-item mr-3" routerLinkActive="active">
+                        <a routerLink="/sps/dashboard" class="nav-link"><i class="bi bi-speedometer mr-3"></i>  Tableau de bord</a>
+                      </li>
+                      
+                      <li class="nav-item mr-3" routerLinkActive="active">
+                        <a routerLink="/sps/agences/province" class="nav-link">Provinces</a>
+                      </li>
+                      <li class="nav-item" routerLinkActive="active">
+                         <a routerLink="/sps/rapport/annuel" class="nav-link">Rapport</a>
+                      </li>
+                      <li class="nav-item ml-3" routerLinkActive="active">
+                        <a routerLink="/sps/depotagence" class="nav-link" matBadge="{{instancesTotals}}" matBadgeColor="warn" [matBadgeHidden]="instancesTotals==0"><i class="bi bi-bell-fill"></i></a>
+                      </li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right ml-5 w3-animate-right" *ngIf="status" style="font-family:  Segoe UI Semibold;"> 
+                      <mat-divider [vertical]="true"></mat-divider>
+                      <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-link" matTooltip="Profile" (click)="reloadPrincipale()">
+                        <i class="bi bi-person-circle mr-2" style="font-size: large;"></i>
+                      </button>
+                    </ul>
+
+                    <!-- <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="logoutWarning()"><i class="bi bi-box-arrow-right mr-2" style="color: grey;"></i> Déconnecter</button>
+                    </mat-menu> -->
+                    
+              
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                         <h4 class="text-center mt-3" style="font-family: Segoe UI ; color: grey;">Profile</h4>
+                         <mat-divider></mat-divider>
+                          <div class="modal-body">
+                            <fieldset class="border rounded-3 row  pb-3">
+                              <legend  class="float-none w-auto" style="color: grey; margin: auto;padding: auto;"  >
+                                <i class="bi bi-person-circle" style="font-size: 70px; color: grey;" ></i>
+                              </legend>
+                              <h2 class="text-center mt-1">{{principale.userName}}</h2>
+                              <p class="text-center" style="color: grey; margin-top: -4%;" *ngIf="authService.hasRole('ADMIN')">Administrateur</p>
+                              <p class="text-center" style="color: grey;" *ngIf="!authService.hasRole('ADMIN')">Utilisateur</p>
+                              <mat-divider class="p-3"></mat-divider>
+                              
+
+                              <mat-accordion>
+                                <mat-expansion-panel hideToggle>
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-description style="color: grey;">
+                                      <i class="bi bi-person-fill-gear mr-3" style="color: grey;"></i> Modifier le nom d'utilisateur 
+                                    </mat-panel-description>
+                                  </mat-expansion-panel-header>
+                                  
+                                  <form [formGroup]="FormUser_updateName" (ngSubmit)="onUpdateUserName()">
+                                    <div class="mb-2 input-group">
+                                        <span class="input-group-text"><i class="bi bi-person-fill" aria-hidden="true"></i></span>
+                                        <input style="font-size: small;" type="text" formControlName="userName" class="form-control" placeholder=" Nouveau nom d'utilisateur ...">
+                                    </div>
+                                    <div class="input-group">
+                                      <span class="input-group-text"><i class="bi bi-person-check" aria-hidden="true"></i></span>
+                                      <input style="font-size: small;" type="text" formControlName="userNameConfirm" class="form-control" placeholder=" Confirmer le nom d'utilisateur ...">
+                                    </div>
+                                    <div class="row m-0">
+                                        <button type="submit" [disabled]="FormUser_updateName.invalid || FormUser_updateName.value.userName != FormUser_updateName.value.userNameConfirm" class=" btn btn-primary mat-elevation-z8 mt-3 p-1" style="font-size: large;">Modifier</button>
+                                    </div>    
+                                </form>
+
+
+                                  </mat-expansion-panel>
+                                <mat-expansion-panel (opened)="panelOpenState = true"
+                                                     (closed)="panelOpenState = false">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-description style="color: grey;">
+                                      <i class="bi bi-key-fill mr-3" style="color: grey;"></i> Changer le mot de passe  
+                                    </mat-panel-description>
+                                  </mat-expansion-panel-header>
+                                  
+                                  <form [formGroup]="FormUser_updatePassword" (ngSubmit)="onUpdateUserPassword()">
+                                    <div class="mb-2 input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                        <input style="font-size: small;" type="text" formControlName="password" class="form-control" placeholder="Nouveau mot de passe ..." >
+                                    </div>
+                                    <div class="input-group">
+                                      <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                      <input style="font-size: small;" type="password" formControlName="passwordConfirm" class="form-control" placeholder="Confirmer le mot de passe ..." >
+                                    </div>
+                                    <div class="row m-0">
+                                        <button type="submit" [disabled]="FormUser_updatePassword.invalid || FormUser_updatePassword.value.password != FormUser_updatePassword.value.passwordConfirm" class="btn btn-primary mat-elevation-z8 mt-3 p-1" style="font-size: large;">Modifier</button>
+                                    </div>    
+                                </form>
+
+
+                                 </mat-expansion-panel>
+                              </mat-accordion>
+                              
+                            </fieldset>
+                          </div>
+                          
+                          <button mat-button color="primary" style="color: grey;" aria-label="Example icon button with a home icon" data-bs-dismiss="modal" (click)="logoutWarning()">
+                            <i class="bi bi-box-arrow-right mr-2" style="color: grey;"></i> Déconnecter                            
+                          </button>
+                          <div class="modal-footer">
+                            <button mat-stroked-button data-bs-dismiss="modal" class="mr-3" style="color: grey;">Retour</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- --------------------------------------------------------- -->
+
+
+              </div>
+              
+            </div>
+          </nav>
+        
+  
+        <!-- <div id="content" class="p-4 p-md-5 pt-5"> -->
+        <router-outlet></router-outlet>
+      
+        <div class="footer p-5 border mt-2 " style="min-height: calc(40vh - 40px); text-align: center;color: #0b132b;background-color: #e4e4e4;font-family:  Segoe UI ;" >
+          
+          <span style="color: grey; font-size: 13px;"> Copyright &copy; |  2023 - Madagascar </span>
+        </div>
+
+    </div>
+
+</div>
+

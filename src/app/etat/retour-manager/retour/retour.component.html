@@ -1,0 +1,149 @@
+
+
+<div class="container-fluid bg-white">
+    <div class="p-5 ">
+
+        <div class="p-3 mb-5" style="background-color: #f7f7f7;">
+            <div>
+                <span style="color: grey;">
+                    <a routerLink="/sps/depotagence" style="text-decoration: none; color: grey;">DÉPÔT PARTENAIRE ( {{nbDepotagence}} )</a> 
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienDepotprovince}} style="text-decoration: none; color: grey;">RÉPARTITION DIRPM ( {{nbDepotprovince}} )</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienDepotzone}} style="text-decoration: none; color: grey;">RÉPARTITION AGENCE ( {{currentDepot.nbDepot}} )</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienEtat}} style="text-decoration: none; color: grey;">ÉTAT</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    RETOUR
+                </span>
+            </div> 
+        </div>
+
+
+        <fieldset class="border rounded-3 p-5 mb-3">
+            <legend  class="float-none w-auto px-3"  >
+                   <span style="font-size: medium; color: grey;">Retour Actuels</span>
+            </legend>
+            <div class="row">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 pt-5">
+                    <div style="font-family: Segoe UI Semibold; font-size: medium;">
+                            <div class="row d-none d-md-block">
+                                <app-semicircle-pie-retour  [percent]="percent | number: '1.0-0'" [bool]="bool" ></app-semicircle-pie-retour>
+                            </div>
+                            <div class="row">
+                                <p class="mt-3 mb-0 w3-animate-left" style="color: grey;">Agence : <span style="color: green; font-size: 20px;font-family: Segoe UI Semibold;"> {{nomZone}}</span></p>
+                            </div>
+                            <div class="row">
+                                <p class=" w3-animate-right" style="color: grey;">Nombre de répartition : <span style="color: green; font-size: 20px;"> {{currentDepot.nbDepot}}</span></p>
+                            </div>
+                            <div class="row">
+                                <p class="mt-3 w3-animate-right" style="color: grey;">Total Retours : <span style="color: green; font-size: 20px;font-family: Segoe UI Semibold;"> {{R}}</span></p>
+                            </div>
+                           
+                        </div>
+                        
+                </div>
+
+
+                <fieldset class=" offset-xxl-3 offset-xl-3 offset-lg-3 offset-md-3 offset-sm-3 col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 border rounded-3 p-3 mat-elevation-z8" style="background-color: #f2f2f2;">
+                    <legend for="nbLivree"  class="float-none w-auto px-3" >
+                        <mat-card style="color: white;background-color: #198754; font-size: medium;font-family: Segoe UI;" class="p-2">
+                            Ajout Retour
+                        </mat-card>
+                        
+                    </legend>
+                    <form [formGroup]="FormEtat_addRetour" (ngSubmit)="onAddRetour()">
+                        <div class="form-group" >
+                                <input min="1" type="number" class="form-control mb-3" id="nbRetour" formControlName="nbRetour" placeholder="Nombre de retour" style="font-family: Segoe UI;">
+                                <!-- <input type="text" class="form-control mb-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6" id="motifRetour" formControlName="motifRetour" placeholder="Motif ?" style="font-family: Segoe UI ;">  -->
+                                <mat-form-field appearance="fill" class="col-12">
+                                    <mat-label>Motif</mat-label>
+                                    <mat-select (selectionChange)="ChangeSelectMotif($event)" formControlName="motifRetour" style="font-family: Segoe UI;">
+                                        <mat-option *ngFor="let motif of motifs" [value]="motif.idMotif">{{motif.nomMotif}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                        </div>
+                        
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <button mat-raised-button type="submit" [disabled]="FormEtat_addRetour.invalid || R==currentDepot.nbDepot"  class="btn my-1 mb-3" style="width: 100%;color: white;background-color: #198754">AJOUTER</button> 
+                        </div>   
+                                
+                    </form>
+                </fieldset>
+
+                
+            </div>
+           
+        </fieldset>
+
+
+
+
+
+
+
+
+<!-- 
+        <div class="container-fluid">
+            <div class= "row mb-4">
+                <div class="col">
+                    <h5 style="color: #0b132b; " class="col-6 p-0">Liste des Retours actuels </h5>
+                    <p>Total Retours : <span style="color: blue; font-size: 20px;">{{R}}</span></p>
+                </div>
+                
+                <div class="container offset-2 col-4">
+                    <div class="col">
+                        <form [formGroup]="FormEtat_addRetour" (ngSubmit)="onAddRetour()">
+                            <div class="form-group" >
+                                <h5 for="nbRetour" class="my-1 mb-3" style="color: grey;" > Ajout Retour</h5>
+                                <input type="text" class="form-control mb-3" id="nbRetour" formControlName="nbRetour" placeholder="Nombre de retour">
+                                <input type="text" class="form-control mb-3" id="motifRetour" formControlName="motifRetour" placeholder="Motif ?">
+                                <button type="submit" [disabled]="FormEtat_addRetour.invalid"  class="btn btn-success my-1 mb-3" style="width: 100%;" (click)="popup()">AJOUTER</button> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Nombre Retour</th>
+                        <th scope="col">Motif</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Heure</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr *ngFor="let retour of  currentDepot.retourByDepot_list; let i=index ; " style="font-family: Segoe UI;font-size: 14px;" >
+                        <td style="color: grey;">{{i+1}}</td>
+                        <td style="color: blue;">{{retour.nbRetour}}</td>
+                        <td>{{retour.motifRetour}}</td>
+                        <td>{{retour.dateRetour | date}}</td>
+                        <td>{{retour.timeRetour}}</td>
+                        <td>    
+                            <div class="d-flex flex-row ">
+                                <div class="ml-3"><button matTooltip="Supprimer" type="button" class="btn" (click)="deleteWarning(retour)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"></i></button></div>
+                            </div>
+                        </td>
+    
+                    </tr>
+                </tbody>
+    
+            </table>
+        </div>
+        
+
+    </div>
+
+
+</div>
+
+

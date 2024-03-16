@@ -1,0 +1,105 @@
+
+<div class="container-fluid bg-white">
+
+    <div class="p-5">
+
+
+        <div class="p-3 mb-5" style="background-color: #f7f7f7;">
+            <div>
+                <span style="color: grey;"> 
+                    <a routerLink="/sps/depotagence" style="text-decoration: none; color: grey;">DÉPÔT PARTENAIRE ( {{nbDepotagence}} )</a> 
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienDepotprovince}} style="text-decoration: none; color: grey;">RÉPARTITION DIRPM ( {{nbDepotprovince}} )</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienDepotzone}} style="text-decoration: none; color: grey;">RÉPARTITION AGENCE ( {{currentDepot.nbDepot}} )</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    
+                    <a routerLink={{lienEtat}} style="text-decoration: none; color: grey;">ÉTAT</a>
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    LIVRÉE
+                </span>
+            </div> 
+        </div>
+
+        <fieldset class="border rounded-3 p-5 mb-3">
+            <legend  class="float-none w-auto px-3"  >
+                   <span style="font-size: medium;color: grey;">Livrées Actuels</span> 
+            </legend>
+            <div class="row">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 ">
+                        <div style="font-family: Segoe UI Semibold; font-size: medium;">
+                            <div class="row d-none d-md-block">
+                                <app-semicircle-pie-livree  [percent]="percent| number: '1.0-0'" [bool]="bool" ></app-semicircle-pie-livree>
+                            </div>
+                            <div class="row">
+                                <p class=" mb-0 w3-animate-left" style="color: grey;">Agence : <span style="color: green; font-size: 20px;"> {{nomZone}}</span></p>
+                            </div>
+                            <div class="row">
+                                <p class=" w3-animate-right" style="color: grey;">Nombre de répartition : <span style="color: green; font-size: 20px;"> {{currentDepot.nbDepot}}</span></p>
+                            </div>
+                            <div class="row">
+                                <p class=" w3-animate-right" style="color: grey;">Total Livrées : <span style="color: green; font-size: 20px;"> {{L}}</span></p>
+                            </div>
+                          
+                        </div>
+                        
+                </div>
+
+
+                <fieldset class="offset-xxl-3 offset-xl-3 offset-lg-3 offset-md-3 offset-sm-3 col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 border rounded-3 p-3 mat-elevation-z8" style="background-color: #f2f2f2;">
+                    <legend for="nbLivree"  class="float-none w-auto px-3" >
+                        <mat-card style="color: white;background-color: #198754; font-size: medium;font-family: Segoe UI;" class="p-2" >
+                            Ajout Livrée
+                        </mat-card>
+                        
+                    </legend>
+                    <form [formGroup]="FormEtat_addLivree" (ngSubmit)="onAddLivree()">
+                        <div class="form-group" >
+                            
+                            <input min="1" type="number" class="form-control mb-3" id="nbLivree" formControlName="nbLivree" placeholder="Entrer un nombre" style="font-family: Segoe UI;">
+                            <button mat-raised-button type="submit" [disabled]="FormEtat_addLivree.invalid || L==currentDepot.nbDepot" class="btn col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4" style="width: 100%;color: white;background-color: #198754">AJOUTER</button> 
+                        </div>
+                    </form>
+                </fieldset>
+
+                
+            </div>
+           
+        </fieldset>
+        
+    
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-hover shadow">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Nombre Livree</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Heure</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr *ngFor="let livree of  currentDepot.livreeByDepot_list; let i=index ; " style="font-family: Segoe UI; font-size: 14px;">
+                        <td style="color: grey;">{{i+1}}</td>
+                        <td style="color: green; ">{{livree.nbLivree}}</td>
+                        <td>{{livree.dateLivree | date}}</td>
+                        <td>{{livree.timeLivree}}</td>
+                        <td>    
+                            <div class="d-flex flex-row ">
+                                <div class="ml-3"><button matTooltip="Supprimer" type="button" class="btn" (click)="deleteWarning(livree)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"></i></button></div>
+                            </div>
+                        </td>
+    
+                    </tr>
+                </tbody>
+    
+            </table>
+        </div>
+        
+    </div>
+
+</div>

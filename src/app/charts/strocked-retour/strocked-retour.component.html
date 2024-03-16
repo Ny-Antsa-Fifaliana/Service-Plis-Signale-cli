@@ -1,0 +1,11 @@
+<div id="chart">
+    <apx-chart *ngIf="percentRetour|number"
+      [series]="[percentRetour]"
+      [chart]="chartOptions.chart"
+      [plotOptions]="chartOptions.plotOptions"
+      [labels]="chartOptions.labels"
+      [fill]="chartOptions.fill"
+      [stroke]="chartOptions.stroke"
+    ></apx-chart>
+</div>
+  

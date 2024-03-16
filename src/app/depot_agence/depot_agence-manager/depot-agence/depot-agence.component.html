@@ -1,0 +1,82 @@
+<div class="container-fluid bg-white p-5">
+
+    <div class="p-3" style="background-color: #f7f7f7;">
+        <div>
+            <span style="color: grey;"> DÉPÔT PARTENAIRE</span>
+        </div>
+    </div>
+    
+        <fieldset class="border rounded-3 p-4 mt-4 pt-0">
+            <legend  class="float-none w-auto px-3"  >
+                    <span style="font-size: medium;color: grey;font-family: Segoe UI;">Liste des dépôts des Partenaires</span>
+            </legend> 
+            <div class="row mt-3 mb-5">
+                <div class="col-6">
+                    <form [formGroup]="Form">
+                        <div class="form-group  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 " matTooltip="Choisir une année pour voir les dépots">
+                            <mat-form-field appearance="fill" class="col-12 " >
+                                <mat-label>Année</mat-label>
+                                <mat-select  formControlName="annee"  (selectionChange)="ChangeSelectYear($event)">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option >
+                                </mat-select>
+                            </mat-form-field>
+
+
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="col-6 ">
+                    <button mat-raised-button class=" btn col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 " style="background-color: #f5f5f5; color: grey;padding: 27px;" (click)="viewAddDepotAgenceForm()"><i class="bi bi-person-add"></i>Nouvelle Dépôt</button>
+                </div>
+            </div>
+
+          
+            <mat-card class="p-3 table-responsive row">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-hover shadow">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Nb Depot</th>
+                            <th scope="col">Partenaire</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Répartition</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr *ngFor="let depotAgence of depotagences_and_instances; let i = index" style="font-family: Segoe UI ;font-size: 14px;">
+                            <td style="color: grey; ">{{i+1}}</td>
+                            <td style="color: green; ">{{depotAgence.nb_depotagence}}</td>
+                            <td style="color: #252a6a;">{{depotAgence.nom_deposeur}}</td>
+                            <td >{{depotAgence.date_depotagence | date}}</td>
+                        
+                            <td>  
+                                    <button matTooltip="Supprimer" type="button" class="btn mr-5" (click)="deleteWarning(depotAgence)"><i class="bi bi-x-circle-fill" style="color: #f57c7c;"></i></button>
+                            </td>
+                            <td>
+                                <button mat-raised-button  style=" font-size: small; background-color: #14517c; color: aliceblue; width: 100%;" (click)="viewDepotProvinceOfDepotAgence(depotAgence.id_depotagence)" matBadge="{{depotAgence.sum_instance}}"  matBadgeColor="warn" (click)="this.depotAgenceService.emitChangeBadgeValue(true);" [matBadgeHidden]="depotAgence.sum_instance==0" mat-badge-content matTooltip="Instance : {{depotAgence.sum_instance}}">DIRPM</button>
+                            </td>
+                            
+                        </tr>
+                        <tr style="background-color: #dcdcdc;">
+                            <th>Total :</th>
+                            <td>{{totalDepotagence}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                    </tbody>
+    
+                </table>
+            </mat-card>
+            
+    </fieldset>
+
+
+
+
+</div>

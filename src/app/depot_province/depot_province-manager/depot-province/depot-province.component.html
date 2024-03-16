@@ -1,0 +1,165 @@
+<div class="container-fluid bg-white">
+
+    <div class="container-fluid pt-5">
+        <div class="p-3 mb-3" style="background-color: #f7f7f7;">
+            <div>
+                <span style="color: grey;"> 
+                  <a routerLink="/sps/depotagence" style="text-decoration: none; color: grey;"> DÉPÔT PARTENAIRE ( {{currentDepotAgence.nbDepotAgence}} )</a> 
+                    <span style="margin-left: 20px;margin-right: 20px;">></span>
+                    RÉPARTITION DIRPM
+                    </span>
+            </div> 
+        </div>
+
+        <mat-card class="mb-4 p-5 " style="background-color: #f7f7f7;">
+            <div class="row">
+                <fieldset class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 border mat-elevation-z8 rounded-3 p-4 "
+                    style="background-color: white;">
+                    <legend class="float-none w-auto px-3 w3-animate-left">
+                        <mat-card
+                            style="color: white;background-color: #14517c;font-size: medium;font-family: Segoe UI;" class="p-2">
+                            Répartition par DIRPM
+                        </mat-card>
+
+                    </legend>
+
+                    <mat-card class="p-3">
+                        <div class="row m-1"
+                            *ngFor="let depotProvince of depotprovinces_and_instances; let i=index"
+                            style="font-family: Segoe UI; font-size: 14px;">
+                            <p class="col-xxl-5 col-xl-5 col-lg-6 col-md-6 col-sm-5 p-0 w3-animate-bottom"
+                                style="color: grey;font-family: Segoe UI;font-size: small;">
+                                {{depotProvince.nom_province}}</p>
+
+                            <div class="progress provinceProgressBar w3-animate-left col-xxl-7 col-xl-7 col-lg-6 col-md-6 col-sm-7"
+                                style="background-color: #cccccc;">
+                                <div>{{(depotProvince.nb_depotprovince*100)/currentDepotAgence.nbDepotAgence| number:
+                                    '1.0-1'}}%</div>
+                                <div class="progress-value ml-3 "
+                                    style=" --width:{{(depotProvince.nb_depotprovince*100)/currentDepotAgence.nbDepotAgence}}%;"
+                                    [style.background-color]="colors[i]"></div>
+                            </div>
+
+                        </div>
+                    </mat-card>
+
+                    <div class="row mt-3" style="font-family: Segoe UI;">
+                        <p class="col-12 text-end w3-animate-right" style="color: grey; font-size: 16px;"> Dépôts :
+                            {{currentDepotAgence.nbDepotAgence}}</p>
+                    </div>
+
+
+
+                </fieldset>
+
+
+
+
+                <fieldset
+                    class="offset-xxl-1 offset-xl-1 offset-lg-1 offset-md-1 offset-sm-1 col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 border rounded-3 p-3 mat-elevation-z8"
+                    style="background-color: white;">
+                    <legend for="nbLivree" class="float-none w-auto px-3">
+                        <mat-card class="p-2"
+                            style="color: white;background-color: #198754; font-size: medium;font-family: Segoe UI;">
+                            Ajouter dans DIRPM
+                        </mat-card>
+
+                    </legend>
+                    <div class="container">
+                        <div class="col">
+                            <form [formGroup]="Form_addDepotProvince" (ngSubmit)="onAddDepotProvince()">
+                                <div class="form-group" style="font-family: Segoe UI ;">
+                                    <input min="1" type="number" class="form-control mb-3" id="nbDepotProvince"
+                                        formControlName="nbDepotProvince" placeholder="Entrer un nombre">
+
+                                    <mat-form-field appearance="fill" class="col-12">
+                                        <mat-label>Province</mat-label>
+                                        <mat-select (selectionChange)="ChangeSelectProvince($event)"
+                                            formControlName="province" style="font-family: Segoe UI; font-size: 14px;">
+                                            <mat-option *ngFor="let province of provinces"
+                                                [value]="province.codeProvince">{{province.nomProvince}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+
+                                    <button mat-raised-button type="submit" [disabled]="Form_addDepotProvince.invalid"
+                                        class="btn my-1 mb-4" style="width: 100%; background-color: #198754; color: white;"
+                                        >AJOUTER</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+
+        </mat-card>
+
+
+
+
+    </div>
+
+
+
+
+    <mat-card class="p-4 table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable"
+            class="table  table-hover shadow ">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Nb repartition</th>
+                    <th scope="col">DIRPM</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Répartition</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let depotProvince of depotprovinces_and_instances; let i = index;"
+                    style="font-family: Segoe UI; font-size: 14px;">
+                    <td style="color: grey;">{{i+1}}</td>
+                    <td style="color: green; ">{{depotProvince.nb_depotprovince}}</td>
+                    <td style="color: #252a6a; ">{{depotProvince.nom_province}}</td>
+                    <td>{{depotProvince.date_depotprovince | date}}</td>
+
+                    <td>
+                            <!-- <div><button type="button" class="btn" (click)="viewUpdateDepot(depot.nbDepot, depot.idDepot,currentZone.idZone)"><i class="bi bi-pencil-square" style="color: #3f48cc;"></i> </button></div> -->
+                            <div class="ml-3"><button matTooltip="Supprimer" type="button" class="btn"
+                                    (click)="deleteWarning(depotProvince)"><i class="bi bi-x-circle-fill"
+                                        style="color: #f57c7c;"></i></button></div>
+                    </td>
+                    <td>
+                        <button class="btn ml-4" mat-raised-button
+                        style="background-color: #14517c; color: #fff;"
+                        (click)="viewDepotOfZone(depotProvince.id_depotprovince)"
+                        matBadge="{{depotProvince.sum_instance}}" matBadgeColor="warn"
+                        [matBadgeHidden]="depotProvince.sum_instance==0" mat-badge-content matTooltip="Instance : {{depotProvince.sum_instance}}">Agence </button> 
+                    </td>
+
+
+                </tr>
+                <tr style="background-color: #dcdcdc;">
+                    <th>Total :</th>
+                    <td>{{totalDepotprovince}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </mat-card>
+
+
+
+
+
+
+
+
+
+</div>

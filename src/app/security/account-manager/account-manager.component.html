@@ -1,0 +1,161 @@
+
+<div class="container-fluid bg-white">
+       
+    <div class="table-responsive p-2">
+        <h1 style="color: grey;" class="mt-5 ml-5"><i class="bi bi-gear-fill"></i> Paramètre du compte</h1>
+        <mat-divider></mat-divider>
+        <div class="row mt-5" >
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                
+                    <fieldset class="border rounded-3 p-3" style="width: auto;height: auto;">
+                        <legend  class="float-none w-auto px-3" style="font-family:  Segoe UI ;color: grey;" >
+                            <i class="bi bi-people-fill mr-2"></i>    
+                            Listes des utilisateurs
+                        </legend> 
+                        
+                        <div class="p-3 table-responsive">
+                            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover " >
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th  scope="col">No.</th>
+                                        <th  scope="col">Nom </th>
+                                        <th  scope="col">Rôle </th>
+                                        <th scope="col">Action </th>
+                                    </tr>
+                                </thead>
+        
+                                <tbody>
+                                    <tr *ngFor="let user of  appUsers; let i=index ;" >
+                                        <td style="color: grey;">{{i+1}}</td>
+                                        <td style="font-size: 16px; font-family:  Segoe UI Semibold;">{{ user.userName }}</td>
+                                        <td style="font-size: 16px; font-family:  Segoe UI Semibold;">
+                                            <div class="d-flex flex-row" *ngFor="let role of user.appRoles">
+                                                <span style="font-size: small;" [ngStyle]="{'color': role.roleName == 'ADMIN'? 'green':''}">{{role.roleName}}</span>
+                                            </div>
+                                        </td>
+                                        
+                                        <td>    
+                                            <div class="d-flex flex-row ">
+                                                <button type="button" class="btn" style="color: #3f4b63;"  (click)="viewUpdateUser(user.userName,user.id)"><i class="bi bi-pencil-square"></i></button>
+                                                <button type="button" class="btn" (click)="deleteWarningUser(user)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"></i></button>
+                                                <div> <button class="btn ml-4" mat-raised-button style="background-color: white; color: black; font-size: small;" (click)="viewRoleUser(user.id)">Rôle</button> </div>
+                                            </div>
+                                        </td>
+        
+                                    </tr>
+                                    
+                                </tbody>
+        
+                            </table>
+                        </div>
+                                
+        
+                    </fieldset>
+                
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <fieldset class="border rounded-3 p-3 " style="height: auto;">
+                    <legend  class="float-none w-auto px-3" style="color: grey;" >
+                        <i class="bi bi-person-bounding-box mr-2"></i>
+                       Créer un compte
+                    </legend>
+                    <mat-card style="background-color: #f1f1f1;" class="p-3">
+               
+                        <form [formGroup]="FormUser_add" (ngSubmit)="onAddUser()">
+                            <div class="form-group input-group mt-3 mb-4">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-person-fill-add"></i></span></div>
+                                <input type="text" class="form-control" id="nomUser" formControlName="nomUser" placeholder="Nouvelle utilisateur ...">
+                            </div>
+                            <div class="form-group input-group mt-3 mb-4">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-lock-fill"></i></span></div>
+                                <input type="password" class="form-control" id="mdpUser" formControlName="mdpUser" placeholder="Veuillez saisir un mot de passe ...">
+                            </div>
+                            <div class="form-group input-group mt-3 mb-4">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-key-fill"></i></span></div>
+                                <input type="password" class="form-control" id="confirmation" formControlName="confirmation" placeholder="Confirmer le mot de passe ...">
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-7"></div>
+                                <button  type="submit" [disabled]="FormUser_add.invalid || FormUser_add.value.mdpUser != FormUser_add.value.confirmation" class="btn btn-success col-5 mb-4 mt-2 mat-elevation-z8" style="font-size: large;">Ajouter</button>
+                            </div>    
+                            
+                        </form>
+                    </mat-card>
+            </fieldset>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+               
+                    <fieldset class="border rounded-3 p-3">
+                        <legend  class="float-none w-auto px-3" style="font-family:  Segoe UI ;color: grey;" >
+                            <i class="bi bi-bookmark-check-fill mr-2"></i>    
+                            Listes des rôles
+                        </legend> 
+                        
+                        <div class="p-3 table-responsive ">
+                            <table class="table table-hover ">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th  scope="col">No.</th>
+                                        <th  scope="col">Rôle</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+        
+                                <tbody>
+                                    <tr *ngFor="let role of  appRoles; let i=index ;" >
+                                        <td style="color: grey;">{{i+1}}</td>
+                                        <td style="font-size: 16px; font-family:  Segoe UI Semibold;">{{ role.roleName }}</td>
+                                        
+                                        <td>    
+                                            <div class="d-flex flex-row ">
+                                                <button type="button" class="btn" (click)="deleteWarningRole(role)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"></i></button>
+                                            </div>
+                                        </td>
+        
+                                    </tr>
+                                    
+                                </tbody>
+        
+                            </table>
+                        </div>
+                                
+        
+                    </fieldset>
+              
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <fieldset class="border rounded-3 p-3" style="height: auto;">
+                    <legend  class="float-none w-auto px-3" style="color: grey;">
+                        <i class="bi bi-shield-shaded mr-2"></i>
+                        Ajouter un rôle
+                    </legend>
+                    <mat-card style="background-color: #f1f1f1;">
+               
+                        <form [formGroup]="FormRole_add" (ngSubmit)="onAddRole()">
+                            <div class="form-group input-group mt-3 mb-3">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-shield-lock-fill"></i></span></div>
+                                <input type="text" class="form-control" id="nomRole" formControlName="nomRole" placeholder="Veuillez saisir un rôle ...">
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-7"></div>
+                                <button mat-raised-button type="submit" [disabled]="FormRole_add.invalid"  class="btn btn-success col-5 mb-4 mt-2 mat-elevation-z8" style="font-size: large;">Ajouter</button>
+                            </div>    
+                            
+                        </form>
+                    </mat-card>
+            </fieldset>
+            </div>
+        </div>
+        
+ 
+    </div>
+
+
+</div>
+
+
+
+
+

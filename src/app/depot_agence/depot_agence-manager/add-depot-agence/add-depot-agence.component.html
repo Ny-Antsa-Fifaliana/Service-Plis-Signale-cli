@@ -1,0 +1,66 @@
+
+
+
+
+
+<div class="container-fluid mb-5 pb-5 mt-3" style="position: relative; top: 33%;left: 50%;transform: translate(-50%,-50%);">
+    <div class="row">
+       
+           
+                
+
+
+                <fieldset class="pb-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 rounded-3 mat-elevation-z8" style="background-color: #f1f1f1;position: relative;left: 50%;transform: translate(-50%); ">
+                        <legend  class="float-none w-auto px-3" >
+                            <mat-card style="background-color: #14517c; color: aliceblue;" class="p-2 mat-elevation-z8">
+                               <h3 style="color: white;margin-bottom: 0%;">  AJOUT DEPÔT</h3>
+                            </mat-card>
+                            
+                        </legend>
+                        <mat-card class="p-4">
+                   
+                            <form [formGroup]="FormDepotAgence_add" (ngSubmit)="onAddDepotAgence()">
+
+                                <div class="form-group mt-3 mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text"> Nombre Dépôt</span></div>
+                                    <input min="1" type="number" class="form-control" id="nbDepotAgence" formControlName="nbDepotAgence">
+                                </div>
+                                <div class="form-group pt-2">
+                                    
+                                    <mat-form-field appearance="fill" class="col-12">
+                                        <mat-label>Partenaire</mat-label>
+                                        <mat-select (selectionChange)="ChangeSelectDeposeur($event)" formControlName="deposeur" style="font-family: Segoe UI;">
+                                            <mat-option *ngFor="let deposeur of deposeurs" [value]="deposeur.idDeposeur">{{deposeur.nomDeposeur}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    
+                                    
+                                </div>  
+                                
+                               
+                                <mat-form-field appearance="fill" class="col-12">
+                                        <mat-label>Choisir une date</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="date">
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            
+                                
+
+                                <div class="row m-0">
+                                    <div class=" col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7"></div>
+                                    <button mat-raised-button type="submit" [disabled]="FormDepotAgence_add.invalid" class="p-4 btn btn-success col-xxxl-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 mb-4 mt-2 mat-elevation-z8" style="font-size: large;background-color: #00e396; color: white;">Ajouter</button>
+                                </div>    
+                                
+                            </form>
+                        </mat-card>
+                </fieldset>
+         
+    
+            
+
+    </div>
+
+</div> 
+

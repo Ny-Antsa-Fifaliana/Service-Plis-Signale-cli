@@ -1,0 +1,36 @@
+
+
+<div style="margin-top: 20%;" class="pt-5">
+    <div class="container-fluid " style="position: relative; top: 30%;left: 50%;transform: translate(-50%,-50%);" >
+        <div class="row" >
+    
+    
+                    <fieldset class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 rounded-3 mat-elevation-z8" style="background-color: #f1f1f1;position: relative;left: 50%;transform: translate(-50%); ">
+                            <legend  class="float-none w-auto px-3" >
+                                <mat-card style="background-color: #14517c; color: aliceblue; " class="p-2 mat-elevation-z8">
+                                   <h3 style="color: white;margin-bottom: 0%;">AJOUT PROVINCE</h3> 
+                                </mat-card>
+                                
+                            </legend>
+                            <mat-card class="p-3">
+                       
+                                <form [formGroup]="FormProvince_add" (ngSubmit)="onAddProvince()">
+                                    <div class="form-group input-group mt-3 mb-3">
+                                        <div class="input-group-prepend"><span class="input-group-text mat-elevation-z8"> Nom</span></div>
+                                        <input type="text" class="form-control" id="nomProvince" formControlName="nomProvince" placeholder="Veuillez saisir un nom...">
+                                    </div>
+                                    <div class="row m-0">
+                                        <div class=" col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7"></div>
+                                        <button mat-raised-button type="submit" [disabled]="FormProvince_add.invalid" class="btn btn-success col-xxxl-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 mb-4 mt-2 mat-elevation-z8" style="font-size: large;background-color: #00e396; color: white;">Ajouter</button>
+                                    </div>    
+                                    
+                                </form>
+                            </mat-card>
+                    </fieldset>
+       
+    
+        </div>
+    
+    </div> 
+</div>
+

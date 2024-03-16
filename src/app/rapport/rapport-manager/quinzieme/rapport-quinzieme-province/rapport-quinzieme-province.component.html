@@ -1,0 +1,59 @@
+<div class="container-fluid bg-white">
+    <div class="p-5 ">
+
+        <div class="p-3 mb-5" style="background-color: #f7f7f7;">
+            <div>
+                <span style="color: grey;"> 
+                    DÉPÔT PARTENAIRE ( {{nbDepotagence}} )
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    RÉPARTITION DIRPM ( {{currentDepotprovince.nbDepotProvince}} )
+                    <span style="margin-left: 20px;margin-right: 20px;">></span> 
+                    RAPPORT 15ème DU MOIS
+                </span>
+            </div> 
+        </div>
+
+        <fieldset class="border rounded-3 p-5 ">
+            <legend  class="float-none w-auto px-3" style="color: grey;">Rapport 15ème du mois</legend>
+
+                <p style="font-size: 16px;"><span style="color: grey;">Répartition à {{nomProvince}} : </span> <strong>{{currentDepotprovince.nbDepotProvince}}</strong> </p>
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-striped  shadow">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">Semaine du</th> 
+                                <th scope="col">Livree</th>
+                                <th scope="col">Retour</th>   
+                                <th scope="col">Instance</th>
+                                <th scope="col" style=" background-color:#00E396" class="text-center">Livree</th>
+                                <th scope="col" style="background-color:#FEB019" class="text-center">Retour</th>
+                                <th scope="col" style="background-color:red; color: white;" class="text-center">Instance</th>
+                                
+                                
+                            </tr>
+                        </thead>
+    
+                        <tbody>
+                            <tr *ngFor="let rapport  of rapport_depotprovinces; let i = index">
+                                <td style="color: grey;">{{i+1}}</td>
+                                <td style="color: green; ">{{rapport.charMonth}}</td>
+                                <td>{{rapport.livree}}</td>
+                                <td>{{rapport.retour}}</td>
+                                <td *ngIf="instances">{{instances[i]}}</td>
+                                <td>{{(rapport.livree*100)/currentDepotprovince.nbDepotProvince | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                                <td>{{(rapport.retour*100)/currentDepotprovince.nbDepotProvince | number: '1.0-2' }}<span style="color: grey;"> %</span></td>
+                                <td *ngIf="instances">{{(instances[i]*100)/currentDepotprovince.nbDepotProvince | number: '1.0-2' }}<span style="color: grey;"> %</span></td>     
+                            </tr>
+                        </tbody>
+            
+                    </table>
+                </div>
+                
+
+        </fieldset>
+
+    </div>
+</div>
+
+

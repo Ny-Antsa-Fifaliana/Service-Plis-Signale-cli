@@ -1,0 +1,72 @@
+
+<div class="container-fluid bg-white" style="height: auto;">
+    <div class=" table-responsive p-5  mr-2">
+        <h1 style="color: grey;"><i class="bi bi-gear-fill"></i> Paramètre du compte</h1>
+        <mat-divider></mat-divider>
+        <div class="row mt-5">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4">
+                
+                    <fieldset class="border rounded-3 p-3 ">   
+                        <legend  class="float-none w-auto px-3" style="color: grey; font-size: large; " > 
+                                <span style="font-size: medium;">Liste des Roles appartenant à <strong>{{currentUser.userName}}</strong></span> 
+                        </legend>    
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-sm table-hover mat-elevation-z8">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Rôles</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+            
+                                    <tbody>
+                                        <tr *ngFor="let role of currentUser.appRoles; let i = index">
+                                            <td style="color: grey;">{{i+1}}</td>
+                                            <td style="font-family:  Segoe UI Semibold; font-size: 16px;">{{role.roleName}}</td>
+                                            <td>    
+                                                <div class="d-flex flex-row ">   
+                                                    <button type="button" class="btn" (click)="deleteWarning(role)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"></i></button>
+                                                </div>
+                                            </td>
+            
+                                        </tr>
+                                    </tbody>
+            
+                                </table>
+                            </div>
+                            
+                    </fieldset>
+               
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                <fieldset class="border rounded-3 p-3 " style="background-color: white;">
+                    <legend for="nbLivree"  class="float-none w-auto px-3" style="font-size: medium;color: grey;">
+                       Attribuer un rôle 
+                    </legend>
+                    <div class="container">
+                        <div class="col">
+                            <form [formGroup]="Form_addRoleToUser" (ngSubmit)="onAddRoleToUser()">
+                                <div class="form-group" style="font-family: Segoe UI ;">
+                                        <mat-form-field appearance="fill" class="col-12">
+                                        <mat-label>Sélectionner un rôle</mat-label>
+                                        <mat-select (selectionChange)="ChangeSelectRole($event)" formControlName="role" style="font-family: Segoe UI;">
+                                            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
+                                        </mat-select>
+                                        </mat-form-field>
+
+
+                                    <button mat-raised-button type="submit" [disabled]="Form_addRoleToUser.invalid" class="btn btn-success my-1 mb-4" style="width: 100%;" (click)="popup()">ATTRIBUER</button> 
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+

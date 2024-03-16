@@ -1,0 +1,51 @@
+
+<div class="container-fluid bg-white">
+        <div class=" table-responsive p-5  mr-2">
+            <div class="row mb-3 mt-5" style="margin-right: -0.5%;"   *ngIf="authService.hasRole('ADMIN')">
+                <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9"></div>
+                <button style="background-color: #00e396; color: white;" mat-raised-button class="btn col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3" (click)="viewAddZoneForm(currentProvince.codeProvince)"><i class="bi bi-plus-circle-fill mr-3"></i>Nouvelle Agence </button>
+            </div>
+            <mat-card >
+                <fieldset class="border rounded-3 p-3 ">   
+                    <legend  class="float-none w-auto px-3" style="color: grey; " >
+                        <mat-card style="background-color: #f1f1f1; font-family:  Segoe UI ; color: grey;" class="p-2">
+                           <span style="font-size: medium;">Liste des agences à {{currentProvince.nomProvince}} </span> 
+                        </mat-card>
+                        
+                    </legend>    
+                     
+                            
+                    <div class="p-3 table-responsive row">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtTable" class="table  table-sm table-hover shadow">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Nom Agence</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr *ngFor="let zone of currentProvince.zoneByprovince_list; let i = index">
+                                    <td style="color: grey;">{{i+1}}</td>
+                                    <td style="font-size: 14px; font-family:  Segoe UI;">{{zone.nomZone}}</td>
+                                    <td>    
+                                        <div class="d-flex flex-row ">   
+                                            <button title="Modifier" type="button" class="btn" (click)="viewUpdateZone(zone.nomZone, zone.idZone,currentProvince.codeProvince )"    *ngIf="authService.hasRole('ADMIN')"><i class="bi bi-pencil-square"></i></button>
+                                            <button title="Supprimer" type="button" class="btn" (click)="deleteWarning(zone)"><i class="bi bi-x-circle-fill" style="color: #ec1c24;"    *ngIf="authService.hasRole('ADMIN')"></i></button>
+                                            <button title="Voir les dépots existantes" mat-raised-button class="ml-5" style="background-color: #14517c; color: #fff;width: 40%;font-size: small;" (click)="viewDepotOfZone(zone.idZone,currentProvince.nomProvince)"> Dépôt</button>
+                                        </div>
+                                    </td>
+    
+                                </tr>
+                            </tbody>
+    
+                        </table>
+                    </div>
+                        
+                </fieldset>
+            </mat-card>
+        </div>
+</div>
+
+
